@@ -30,12 +30,12 @@ I[:,:,1]=G[:,:,0] # negro y tiene la misma información en sus 3 capas
 I[:,:,2]=B[:,:,0]
 
 # Muestra la nueva imágen "I" con ayuda de pyplot
-plt.subplot(2,2,1)
+plt.subplot(2,1,1)
 plt.imshow(I)
 plt.title('Imágen reconstruida')
 
 # Muestra la imágen original sin filtros
-plt.subplot(2,2,2)
+plt.subplot(2,1,2)
 plt.imshow(C)
 plt.title('Imágen esperada')
 
