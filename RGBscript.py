@@ -19,7 +19,7 @@ filas = C.shape[0]
 columnas = C.shape[1]
 capas = C.shape[2]
 
-I=np.uint8(np.zeros((filas, columnas, capas),np.uint8))
+I=np.zeros((filas, columnas, capas),dtype=np.uint8)
 
 I[:,:,0]=r
 I(:,:,1]=g

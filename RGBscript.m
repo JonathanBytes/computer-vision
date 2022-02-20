@@ -1,7 +1,7 @@
-R=imread('cubes_R.jpg');
-G=imread('cubes_G.jpg');
-B=imread('cubes_B.jpg');
-C=imread('cubes_color.jpg')
+R=imread('RGB photos/cubes_R.jpg');
+G=imread('RGB photos/cubes_G.jpg');
+B=imread('RGB photos/cubes_B.jpg');
+C=imread('RGB photos/cubes_color.jpg');
 
 r=R(:,:,1);
 g=G(:,:,2);
