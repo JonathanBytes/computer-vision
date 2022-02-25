@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def imsplit(rgb):
+def imsplit(img):
+    rgb = plt.imread(img)
     r=rgb[:,:,0]
     g=rgb[:,:,1]
     b=rgb[:,:,2]
@@ -25,8 +26,6 @@ def imhist(r):
     plt.title('Histograma')
     plt.show()
 
-rgb = plt.imread('cartagena.jpg')
-
-r,g,b = imsplit(rgb)
+r,g,b = imsplit('cartagena.jpg')
 
 h = imhist(r)

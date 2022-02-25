@@ -16,3 +16,4 @@ def imhist(r):
     plt.ylabel('Cantidad')
     plt.title('Histograma')
     plt.show()
+    return h[2]

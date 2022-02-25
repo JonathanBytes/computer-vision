@@ -1,10 +1,12 @@
-import matplotlib.pyplot as plt
-import numpy as np
 from imsplit import imsplit
-from imhist import imhist
 
-rgb = plt.imread('cartagena.jpg')
+import sys
+sys.path
+sys.path.append('~/Documents/Universidad/2022-1/computer-vision/histograma/')
+print(sys.path)
 
-r,g,b = imsplit(rgb)
+from imhist import imhist 
+
+r,g,b = imsplit('cartagena.jpg')
 
 h = imhist(r)
