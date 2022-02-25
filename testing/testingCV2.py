@@ -31,7 +31,7 @@ I[:,:,2]=B[:,:,0]
 
 # Muestra la nueva imágen "I" con ayuda de pyplot
 cv2.imshow('Ventana',I)
-cv2.waitKey(27)
+cv2.waitKey(10000)
 
 # Mantiene la ventana visible
 # plt.show()
