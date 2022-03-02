@@ -11,12 +11,12 @@ imhist(r)
 plt.subplot(2,3,2)
 plt.imshow(g)
 plt.subplot(2,3,5)
-h = imhist(g)
+imhist(g)
 
 plt.subplot(2,3,3)
 plt.imshow(b)
 plt.subplot(2,3,6)
-h = imhist(b)
+imhist(b)
 
 plt.show()
 

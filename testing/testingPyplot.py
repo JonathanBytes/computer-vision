@@ -1,7 +1,9 @@
 # Librería para mostrar gráficos o imágenes
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 # Crear arreglos de varias dimensiones para las nuevas imágenes
 import numpy as np
+
 
 print('\nPor favor asegúrese que las imágenes que desea procesar están en el mismo directorio que este script. \nLas imágenes deben tener la extensión .jpg y cada una de las capas debe ser diferencias con _S donde ese será la capa (R,G,B o color). \n\nPor ejemplo: \n\n\tPara la capa R: imageName_R.jpg')
 img = input('\nNombre de la imágen a analizar: ')
@@ -41,3 +43,6 @@ plt.title('Imágen esperada')
 
 # Mantiene la ventana visible
 plt.show()
+
+imgname = img + '_reconstruida.jpeg'
+mpimg.imsave(imgname,I)
