@@ -8,9 +8,13 @@ import numpy as np
 print('\nPor favor asegúrese que las imágenes que desea procesar están en el mismo directorio que este script. \nLas imágenes deben tener la extensión .jpg y cada una de las capas debe ser diferencias con _S donde ese será la capa (R,G,B o color). \n\nPor ejemplo: \n\n\tPara la capa R: imageName_R.jpg')
 img = input('\nNombre de la imágen a analizar: ')
 
-capaR = img+'/'+img+'_R.jpg'
-capaG = img+'/'+img+'_G.jpg'
-capaB = img+'/'+img+'_B.jpg'
+# capaR = img+'/'+img+'_R.jpg'
+# capaG = img+'/'+img+'_G.jpg'
+# capaB = img+'/'+img+'_B.jpg'
+# capaC = img+'/'+img+'_color.jpg'
+capaR = img+'/'+img+'_R_ajustada.jpeg'
+capaG = img+'/'+img+'_G_ajustada.jpeg'
+capaB = img+'/'+img+'_B_ajustada.jpeg'
 capaC = img+'/'+img+'_color.jpg'
 
 # Es importante la ruta si se ejecuta con el atajo <F5>, ya que la terminal se ejecuta en la raíz del repo de git
@@ -32,17 +36,17 @@ I[:,:,1]=G[:,:,0] # negro y tiene la misma información en sus 3 capas
 I[:,:,2]=B[:,:,0]
 
 # Muestra la nueva imágen "I" con ayuda de pyplot
-plt.subplot(2,1,1)
+plt.subplot(1,2,1)
 plt.imshow(I)
 plt.title('Imágen reconstruida')
 
 # Muestra la imágen original sin filtros
-plt.subplot(2,1,2)
+plt.subplot(1,2,2)
 plt.imshow(C)
 plt.title('Imágen esperada')
 
 # Mantiene la ventana visible
 plt.show()
 
-imgname = img + '_reconstruida.jpeg'
-mpimg.imsave(imgname,I)
+# imgname = img + '_reconstruida.jpeg'
+# mpimg.imsave(imgname,I)

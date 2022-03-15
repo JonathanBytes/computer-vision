@@ -11,4 +11,4 @@ img[:,:,2]=np.array([[0,0,255],[0,128,255],[255,255,0]])
 
 plt.figure(figsize=(20,20))
 plt.imshow(img,vmin=0,vmax=255)
-
+plt.show()
