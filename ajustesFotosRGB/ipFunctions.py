@@ -36,5 +36,3 @@ def imtest(img):
     g=plt.imread(capaG)
     b=plt.imread(capaB)
     return r,g,b 
-
-
