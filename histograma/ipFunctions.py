@@ -74,13 +74,13 @@ def stretchlim(I,Tol=0.01):
                 recon[i,j] = np.int8(histeq[img[i,j]+1]*255)
     return recon """
 
-def imhisteq(I): # Try of a translation of a Matlab code.
+def histeq(I): # Try of a translation of a Matlab code.
     h=imhist(I,False)
     ha=np.zeros(255)
-    for i in range(0,len(h)):
+    for i in range(len(h)):
         ha[i]=np.sum(h[0:i])
     he=(ha/np.sum(h))*255
-    S=np.uint8(he(I))
+    S=np.uint8(he[I])
     return S
 
 def rbg2gray(I):
