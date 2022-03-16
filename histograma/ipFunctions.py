@@ -76,7 +76,7 @@ def stretchlim(I,Tol=0.01):
 
 def histeq(I): # Try of a translation of a Matlab code.
     h=imhist(I,False)
-    ha=np.zeros(255)
+    ha=np.zeros(256)
     for i in range(len(h)):
         ha[i]=np.sum(h[0:i])
     he=(ha/np.sum(h))*255
