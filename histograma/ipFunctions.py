@@ -82,3 +82,7 @@ def imhisteq(I): # Try of a translation of a Matlab code.
     he=(ha/np.sum(h))*255
     S=np.uint8(he(I))
     return S
+
+def rbg2gray(I):
+    r,g,b=imsplit(I)
+    return np.uint8(0.299*np.double(r)+0.587*np.double(g)+0.114*np.double(b))
