@@ -1,0 +1,78 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from ipFunctions import *
+import plot4x4 as plt4
+
+RGB = plt.imread('cartagena.jpg')
+
+r,g,b = imsplit('cartagena.jpg')
+
+gray = rbg2gray('cartagena.jpg')
+# gray[:,:,0] = gray
+
+# Máscara roja
+MaskRr = (r>=90) & (r<=255)
+MaskRg = (g>=0) & (g<=50)
+MaskRb = (b>=0) & (b<=50)
+
+plt.figure(1)
+plt4.plot4x4(MaskRr,MaskRg,MaskRb)
+MaskR = MaskRr & MaskRg & MaskRb
+filas,columnas,capas = RGB.shape
+colorMaskR=np.zeros((filas,columnas,capas),dtype=np.uint8) # El tipo del arreglo debe ser uint8
+colorMaskR[:,:,0] = np.uint8(MaskR) * r
+colorMaskR[:,:,1] = np.uint8(MaskR) * g
+colorMaskR[:,:,2] = np.uint8(MaskR) * b
+
+plt.subplot(2,2,4)
+plt.imshow(colorMaskR)
+
+# Máscara amarilla
+MaskYr = (r>=130) & (r<=255)
+MaskYg = (g>=80) & (g<=255)
+MaskYb = (b>=0) & (b<=50)
+
+plt.figure(2)
+plt4.plot4x4(MaskYr,MaskYg,MaskYb)
+MaskY = MaskYr & MaskYg & MaskYb
+colorMaskY=np.zeros((filas,columnas,capas),dtype=np.uint8) # El tipo del arreglo debe ser uint8
+colorMaskY[:,:,0] = np.uint8(MaskY) * r
+colorMaskY[:,:,1] = np.uint8(MaskY) * g
+colorMaskY[:,:,2] = np.uint8(MaskY) * b
+
+plt.subplot(2,2,4)
+plt.imshow(colorMaskY)
+
+# Máscara azul
+MaskBr = (r>=0) & (r<=50)
+MaskBg = (g>=0) & (g<=50)
+MaskBb = (b>=90) & (b<=255)
+
+plt.figure(3)
+plt4.plot4x4(MaskBr,MaskBg,MaskBb)
+MaskB = MaskBr & MaskBg & MaskBb
+colorMaskB=np.zeros((filas,columnas,capas),dtype=np.uint8) # El tipo del arreglo debe ser uint8
+colorMaskB[:,:,0] = np.uint8(MaskB) * r
+colorMaskB[:,:,1] = np.uint8(MaskB) * g
+colorMaskB[:,:,2] = np.uint8(MaskB) * b
+
+plt.subplot(2,2,4)
+plt.imshow(colorMaskB)
+
+colorMask = colorMaskR + colorMaskY + colorMaskB
+Mask = MaskY + MaskR + MaskB
+
+I=np.zeros((filas,columnas,capas),dtype=np.uint8) # El tipo del arreglo debe ser uint8
+I[:,:,0] = np.uint8(Mask)
+I[:,:,1] = np.uint8(Mask)
+I[:,:,2] = np.uint8(Mask)
+
+gray3=np.zeros((filas,columnas,capas),dtype=np.uint8) # El tipo del arreglo debe ser uint8
+gray3[:,:,0] = gray
+gray3[:,:,1] = gray 
+gray3[:,:,2] = gray 
+
+plt.figure()
+plt.imshow((~I+2)*gray3 + I*RGB)
+
+plt.show()
