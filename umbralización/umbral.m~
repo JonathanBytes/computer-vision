@@ -1,0 +1,20 @@
+clc;clear all;
+RGB = imread('mango6.jpg');
+
+[r,g,b] = imsplit(RGB);
+
+figure()
+subplot(2,3,1)
+imshow(r)
+subplot(2,3,4)
+imhist(r)
+
+subplot(2,3,2)
+imshow(g)
+subplot(2,3,5)
+imhist(g)
+
+subplot(2,3,3)
+imshow(b)
+subplot(2,3,6)
+imhis

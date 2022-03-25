@@ -45,20 +45,23 @@ plt.subplot(2,2,4)
 plt.imshow(colorMaskY)
 
 # Máscara azul
-MaskBr = (r>=0) & (r<=50)
-MaskBg = (g>=0) & (g<=90)
-MaskBb = (b>=55) & (b<=255)
 
-plt.figure(3)
-plt4.plot4x4(MaskBr,MaskBg,MaskBb)
-MaskB = MaskBr & MaskBg & MaskBb
-colorMaskB=np.zeros((filas,columnas,capas),dtype=np.uint8) # El tipo del arreglo debe ser uint8
-colorMaskB[:,:,0] = np.uint8(MaskB) * r
-colorMaskB[:,:,1] = np.uint8(MaskB) * g
-colorMaskB[:,:,2] = np.uint8(MaskB) * b
+MaskB,colorMaskB = makeMask(0,50,0,90,55,255,'cartagena.jpg')
 
-plt.subplot(2,2,4)
-plt.imshow(colorMaskB)
+# MaskBr = (r>=0) & (r<=50)
+# MaskBg = (g>=0) & (g<=90)
+# MaskBb = (b>=55) & (b<=255)
+
+# plt.figure(3)
+# plt4.plot4x4(MaskBr,MaskBg,MaskBb)
+# MaskB = MaskBr & MaskBg & MaskBb
+# colorMaskB=np.zeros((filas,columnas,capas),dtype=np.uint8) # El tipo del arreglo debe ser uint8
+# colorMaskB[:,:,0] = np.uint8(MaskB) * r
+# colorMaskB[:,:,1] = np.uint8(MaskB) * g
+# colorMaskB[:,:,2] = np.uint8(MaskB) * b
+
+# plt.subplot(2,2,4)
+# plt.imshow(colorMaskB)
 
 # Máscara del cielo
 Maskc,colorMaskc = makeMask(90,180,144,220,195,255,'cartagena.jpg')
@@ -78,8 +81,8 @@ Maskc,colorMaskc = makeMask(90,180,144,220,195,255,'cartagena.jpg')
 # plt.subplot(2,2,4)
 # plt.imshow(colorMaskc)
 
-colorMask = colorMaskR + colorMaskY + colorMaskB + colorMaskc
-Mask = MaskY + MaskR + MaskB + Maskc
+colorMask = colorMaskR + colorMaskY + colorMaskB
+Mask = MaskY + MaskR + MaskB 
 
 I=np.zeros((filas,columnas,capas),dtype=np.uint8) # El tipo del arreglo debe ser uint8
 I[:,:,0] = np.uint8(Mask)
