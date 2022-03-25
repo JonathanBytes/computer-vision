@@ -2,10 +2,10 @@ import matplotlib.pyplot as plt
 from ipFunctions import *
 from time import sleep
 
-RGB = plt.imread('mango6.jpg');
+RGB = plt.imread('mango6.jpg')
 
+r,g,b = imsplit('mango6.jpg')
 
-[r,g,b] = imsplit('mango6.jpg');
 bina_r=r>=140
 bina_g=g>=145
 bina_b=b>=125
@@ -32,8 +32,14 @@ imhist(b)
 plt.subplot(3,3,9)
 plt.imshow(bina_b)
 
-for T in range(255):
+plt.show()
+
+for T in range(125):
     bb=b>=T;
     plt.figure(2)
     plt.imshow(bb)
-    sleep(0.001)
+    plt.draw()
+    plt.pause(0.01)
+    plt.clf()
+
+plt.show()
