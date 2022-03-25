@@ -16,6 +16,7 @@ MaskRg = (g>=0) & (g<=50)
 MaskRb = (b>=0) & (b<=50)
 
 plt.figure(1)
+plt.set_cmap('gray')
 plt4.plot4x4(MaskRr,MaskRg,MaskRb)
 MaskR = MaskRr & MaskRg & MaskRb
 filas,columnas,capas = RGB.shape
@@ -30,7 +31,7 @@ plt.imshow(colorMaskR)
 # Máscara amarilla
 MaskYr = (r>=130) & (r<=255)
 MaskYg = (g>=80) & (g<=255)
-MaskYb = (b>=0) & (b<=50)
+MaskYb = (b>=0) & (b<=70)
 
 plt.figure(2)
 plt4.plot4x4(MaskYr,MaskYg,MaskYb)
@@ -45,8 +46,8 @@ plt.imshow(colorMaskY)
 
 # Máscara azul
 MaskBr = (r>=0) & (r<=50)
-MaskBg = (g>=0) & (g<=50)
-MaskBb = (b>=90) & (b<=255)
+MaskBg = (g>=0) & (g<=90)
+MaskBb = (b>=55) & (b<=255)
 
 plt.figure(3)
 plt4.plot4x4(MaskBr,MaskBg,MaskBb)
@@ -73,6 +74,9 @@ gray3[:,:,1] = gray
 gray3[:,:,2] = gray 
 
 plt.figure()
-plt.imshow((~I+2)*gray3 + I*RGB)
+plt.subplot(1,2,1)
+plt.imshow((~I+2) * gray3 + I*RGB)
+plt.subplot(1,2,2)
+plt.imshow(RGB)
 
 plt.show()
