@@ -86,3 +86,17 @@ def histeq(I): # Try of a translation of a Matlab code.
 def rbg2gray(I):
     r,g,b=imsplit(I)
     return np.uint8(0.299*np.double(r)+0.587*np.double(g)+0.114*np.double(b))
+
+def makeMask(ra,rb,ga,gb,ba,bb,img):
+    r,g,b = imsplit(img)
+    RGB = plt.imread(img)
+    Maskr = (r>=ra) & (r<=rb)
+    Maskg = (g>=ga) & (g<=gb)
+    Maskb = (b>=ba) & (b<=bb)
+    Mask = Maskr & Maskg & Maskb
+    filas,columnas,capas = RGB.shape
+    colorMask=np.zeros((filas,columnas,capas),dtype=np.uint8) # El tipo del arreglo debe ser uint8
+    colorMask[:,:,0] = np.uint8(Mask) * r
+    colorMask[:,:,1] = np.uint8(Mask) * g
+    colorMask[:,:,2] = np.uint8(Mask) * b
+    return Mask,colorMask
