@@ -87,7 +87,7 @@ def rbg2gray(I):
     r,g,b=imsplit(I)
     return np.uint8(0.299*np.double(r)+0.587*np.double(g)+0.114*np.double(b))
 
-def makeMask(ra,rb,ga,gb,ba,bb,img):
+def makeMask(ra,rb,ga,gb,ba,bb,img,plot=False):
     r,g,b = imsplit(img)
     RGB = plt.imread(img)
     Maskr = (r>=ra) & (r<=rb)
@@ -97,7 +97,19 @@ def makeMask(ra,rb,ga,gb,ba,bb,img):
     filas,columnas,capas = RGB.shape
     colorMask=np.zeros((filas,columnas,capas),dtype=np.uint8) # El tipo del arreglo debe ser uint8
     colorMask = np.dstack((Mask * r,Mask * g,Mask * b))
-    # colorMask[:,:,0] = Mask * r # Es igual sin el uint8
-    # colorMask[:,:,1] = np.uint8(Mask) * g
-    # colorMask[:,:,2] = np.uint8(Mask) * b
+    if plot == True:
+        plt.figure()
+        plt.set_cmap('gray')
+        plot4x4(Maskr,Maskg,Maskb)
+        plt.subplot(2,2,4)
+        plt.imshow(colorMask)
     return Mask,colorMask
+
+def plot4x4(im1,im2,im3):
+    plt.subplot(2,2,1)
+    plt.imshow(im1)
+    plt.subplot(2,2,2)
+    plt.imshow(im2)
+    plt.subplot(2,2,3)
+    plt.imshow(im3)
+
