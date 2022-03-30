@@ -2,27 +2,21 @@ import matplotlib.pyplot as plt
 import numpy as np
 from ipFunctions import *
 
-img = 'cartagena.jpg'
+img = 'barranquero.jpeg'
 
 RGB = plt.imread(img)
 r,g,b = imsplit(img)
 gray = rbg2gray(img)
 filas,columnas,capas = RGB.shape
 
-# Máscara roja
-MaskR,colorMaskR = makeMask(30,255,0,50,0,50,img,True)
-
-# Máscara amarilla
-MaskY,colorMaskY = makeMask(130,255,80,255,0,70,img)
+# Máscara ojo rojo
+MaskR,colorMaskR = makeMask(66,145,20,55,40,85,img)
 
 # Máscara azul
-MaskB,colorMaskB = makeMask(0,50,0,90,55,255,img)
+MaskB,colorMaskB = makeMask(5,135,110,255,70,255,img,True)
 
-# Máscara del cielo
-Maskc,colorMaskc = makeMask(90,180,144,220,195,255,img)
-
-colorMask = colorMaskR + colorMaskY + colorMaskB
-Mask = MaskY + MaskR + MaskB 
+colorMask = colorMaskB + colorMaskR
+Mask = MaskB + MaskR
 Mask = np.uint8(Mask)
 
 I=np.zeros((filas,columnas,capas),dtype=np.uint8) # El tipo del arreglo debe ser uint8
@@ -37,7 +31,10 @@ plt.imshow((~I+2) * gray3 + I*RGB)
 plt.subplot(1,2,2)
 plt.imshow(RGB)
 
+# plt.figure()
+# plt.imshow(I * gray3 + (~I+2)*RGB)
+
 plt.figure()
-plt.imshow(I * gray3 + (~I+2)*RGB)
+plt.imshow(RGB)
 
 plt.show()

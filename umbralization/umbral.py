@@ -1,10 +1,10 @@
 import matplotlib.pyplot as plt
 from ipFunctions import *
-from time import sleep
 
-RGB = plt.imread('mango6.jpg')
+img='papel.jpg'
+RGB = plt.imread(img)
 
-r,g,b = imsplit('mango6.jpg')
+r,g,b = imsplit(img)
 
 bina_r=r>=140
 bina_g=g>=145
@@ -33,6 +33,8 @@ plt.subplot(3,3,9)
 plt.imshow(bina_b)
 
 plt.show()
+
+print(graythresh(r))
 
 for T in range(125):
     bb=b>=T;

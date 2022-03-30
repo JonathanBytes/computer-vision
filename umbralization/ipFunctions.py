@@ -101,3 +101,27 @@ def makeMask(ra,rb,ga,gb,ba,bb,img):
     # colorMask[:,:,1] = np.uint8(Mask) * g
     # colorMask[:,:,2] = np.uint8(Mask) * b
     return Mask,colorMask
+
+def graythresh(b):
+    h = imhist(b,False)
+    lh = len(h)
+    tam = np.size(b)
+    maxV = 0
+    for T in range(lh):
+        Acub = np.sum(h[0:T])
+        Wb = Acub/tam
+        Acuf = np.sum(h[T+1:lh])
+        if Acub==0:
+            Ub=0
+        else:
+            Ub=(np.arange(0,T,1) @ h[0:T])/Acub
+        if Acuf==0:
+            Uf = 0
+        else:
+            Uf=(np.arange(T+1,lh,1) @ h[T+1:lh])/Acuf
+        Wf = 1-Wb
+        BCV = Wb*Wf*(Ub-Uf)**2
+        if BCV>=maxV:
+            maxV=BCV
+            umbral=(T+1)/255
+    return umbral

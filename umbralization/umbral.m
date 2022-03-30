@@ -6,6 +6,9 @@ bina_r=r>=140;
 bina_g=g>=145;
 bina_b=b>=125;
 
+Thresh = graythresh(r)
+
+
 figure()
 subplot(3,3,1)
 imshow(r)
@@ -28,7 +31,7 @@ imhist(b)
 subplot(3,3,9)
 imshow(bina_b)
 
-for T=1:255
+for T=1:Thresh*255
     bb=b>=T;
     figure(2)
     imshow(bb)
