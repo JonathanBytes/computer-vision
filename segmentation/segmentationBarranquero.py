@@ -19,10 +19,10 @@ colorMask = colorMaskB + colorMaskR
 Mask = MaskB + MaskR
 Mask = np.uint8(Mask)
 
-I=np.zeros((filas,columnas,capas),dtype=np.uint8) # El tipo del arreglo debe ser uint8
+I = np.zeros((filas,columnas,capas),dtype=np.uint8) # El tipo del arreglo debe ser uint8
 I = np.dstack((Mask,Mask,Mask))
 
-gray3=np.zeros((filas,columnas,capas),dtype=np.uint8) # El tipo del arreglo debe ser uint8
+gray3 = np.zeros((filas,columnas,capas),dtype=np.uint8) # El tipo del arreglo debe ser uint8
 gray3 = np.dstack((gray,gray,gray))
 
 plt.figure()
