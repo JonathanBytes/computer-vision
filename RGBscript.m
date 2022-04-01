@@ -7,7 +7,6 @@ r=R(:,:,1);
 g=G(:,:,2);
 b=B(:,:,3);
 
-
 % [filas columnas capas]=size(C);
 % I=uint8(zeros(filas, columnas, capas));
 
