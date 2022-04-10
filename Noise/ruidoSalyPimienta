@@ -1,0 +1,20 @@
+clc
+clear all
+RGB=imread('cartagena.jpg');
+[r,g,b]=imsplit(RGB)
+
+figure()
+imshow(r)
+
+Puntos=10000;
+
+Ir=r;
+[filas,cols]=size(r);
+for i=1:Puntos
+    x=randi(filas);
+    y=randi(cols);
+    Ir(x,y)=255*round(rand());
+end
+
+figure()
+imshow(Ir)

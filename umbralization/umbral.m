@@ -8,7 +8,6 @@ bina_b=b>=125;
 
 Thresh = graythresh(r)
 
-
 figure()
 subplot(3,3,1)
 imshow(r)

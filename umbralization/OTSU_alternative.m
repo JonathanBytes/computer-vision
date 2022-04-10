@@ -1,47 +1,52 @@
+clc 
 clear all
-
-rgb=imread('papel.jpg');
-[r,g,b] = imsplit(rgb);
+RGB=imread('papel.jpg');
+[r,g,b]=imsplit(RGB);
 r=fliplr(r');
-
-% figure()
-% subplot(1,5,1)
-% imshow(r)
-
-paso=4;
-r=r(1:paso:end,1:paso:end);
-
+step=2;
+r=r(1:step:end,1:step:end);
 % T=graythresh(r);
-% hist = imhist(r);
-% T=otsuthresh(hist)
+% hist=imhist(r);
+% T=otsuthresh(hist);
 % bw=im2bw(r,T);
-% subplot(1,5,2)
+% 
+% 
+% figure(1)
+% imshow(r)
+% 
+% figure(2)
 % imshow(bw)
+% % n=15;
+% % m=15;
+% % 
+% % 
+% % padr=double(padarray(r,[(n-1)/2 (m-1)/2],'replicate'));
+% % [filas,cols]=size(r);
+% % T=zeros(filas+(n-1)/2+1,cols+(m-1)/2)+1;
+% % 
+% % 
+% % IniC=(m+1)/2;
+% % IniF=(n+1)/2;
+% % FinC=IniC-1;
+% % FinF=IniF-1;
+% % Ks=0.2;
+% % Rs=128;
+% % Pb=10;
+% % for i=IniF:filas-(FinF)
+% %     for j=IniC:cols-(FinC)
+% %         W=padr(i-FinF:i+FinF,j-FinC:j+FinC);
+% %         %T(i,j)=mean(W(:));
+% %         %T(i,j)=mode(W(:));
+% %         %T(i,j)=median(W(:));
+% %         %T(i,j)=(max(W(:))+min(W(:)))/2;
+% %         %T(i,j)=mean(W(:))*(1+Ks*(std((W(:)))/Rs-1)); % Saovola
+% %         %T(i,j)=mean(W(:))*(1-Pb/100); % Bradley
+% %     end
+% % end
 
-padr = padarray(r,[1 1],'replicate');
+Ta=adaptthresh(r,[7 7],10);
 
-[filas,cols]=size(padr);
-prom = zeros(filas,cols);
-prom2 = zeros(filas,cols);
-prom3 = zeros(filas,cols);
-prom4 = zeros(filas,cols);
+bw=r>=Ta;
 
-n=3;m=5;
-iniF=(n+1)/2;
-iniC=(m+1)/2;
-FinF=iniF-1;
-FinC=iniC-1;
-
-for i=iniF:filas-FinF
-    for j=iniC:cols-FinC
-        w = padr(i-FinF:i+FinF,j-FinC:j+FinC)
-        %prom(i,j) = mean(w(:));
-        %prom2(i,j) = median(w(:));
-        %prom3(i,j) = mode(w(:));     
-        prom(i,j) = (max(w(:))+min(w(:)))/2;
-    end
-end
-
-% bw=padr>=prom;
-% subplot(1,5,3)
-% imshow(bw)
+figure(3)
+imshow(bw)

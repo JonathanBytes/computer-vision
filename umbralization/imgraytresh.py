@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 from ipFunctions import *
-import numpy as np
 
 RGBgray = 'mango6.jpg'
 RGB = plt.imread(RGBgray)

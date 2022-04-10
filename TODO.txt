@@ -1,0 +1,9 @@
+hay que hacer mucha cosa :D
+
+Funciones de HSV
+Función de otsu
+Función de Bradley
+Función de Sauvola
+Función de la media, mediana, moda y maximos y mínimos
+Función de binarización
+Segmentación con HSV
