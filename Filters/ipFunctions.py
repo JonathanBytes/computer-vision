@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
+import statistics as stat
 
 def imsplit(rgb):
     r=rgb[:,:,0]
@@ -152,7 +153,7 @@ def psnr(I,Ir):
     SNR = 10*np.log10(meanNoise/MSE)
     return PSNR, SNR
 
-def undersize(I,step):
+def imundersize(I,step):
     F,C = I.shape
     return I[0:F:step,0:C:step]
 
@@ -175,6 +176,79 @@ def imfilter(I,K):
         for j in range(iniC,C-finC):
             V = Ipad[i-finF-1:i+finF,j-finC-1:j+finC]
             T[i,j] = np.sum(V*K)
+
+    T=T[iniF:F-finF,iniC:C-finC]
+    return np.uint8(T)
+
+def fspecial(type,size):
+    if type.lower() == 'average':
+        return np.ones(size)/size^2
+
+def medfilt2(I,V):
+    
+    n = V[0]
+    m = V[1]
+    
+    iniF=(n+1)//2
+    iniC=(m+1)//2
+    finF=iniF - 1
+    finC=iniC - 1
+    
+    Ipad=np.pad(I,(finF,finC),'edge')
+    
+    F,C = Ipad.shape
+    T=np.zeros([F,C])
+    
+    for i in range(iniF,F-finF):
+        for j in range(iniC,C-finC):
+            V = Ipad[i-finF-1:i+finF,j-finC-1:j+finC]
+            order = np.sort(V.flatten())
+            T[i,j] = order[(n*m+1)//2]
+
+    T=T[iniF:F-finF,iniC:C-finC]
+    return np.uint8(T)
+
+def modefilt(I,W):
+    n = W[0]
+    m = W[1]
+    
+    iniF=(n+1)//2
+    iniC=(m+1)//2
+    finF=iniF - 1
+    finC=iniC - 1
+    
+    Ipad=np.pad(I,(finF,finC),'edge')
+    
+    F,C = Ipad.shape
+    T=np.zeros([F,C])
+    
+    for i in range(iniF,F-finF):
+        for j in range(iniC,C-finC):
+            V = Ipad[i-finF-1:i+finF,j-finC-1:j+finC]
+            moda = stat.mode(V.flatten())
+            T[i,j] = moda
+
+    T=T[iniF:F-finF,iniC:C-finC]
+    return np.uint8(T)
+
+def ordfilt2(I,Termino,K):
+    n, m = K.shape
+    
+    iniF=(n+1)//2
+    iniC=(m+1)//2
+    finF=iniF - 1
+    finC=iniC - 1
+    
+    Ipad=np.pad(I,(finF,finC),'edge')
+    
+    F,C = Ipad.shape
+    T=np.zeros([F,C])
+    
+    for i in range(iniF,F-finF):
+        for j in range(iniC,C-finC):
+            V = Ipad[i-finF-1:i+finF,j-finC-1:j+finC] * K
+            order = np.sort(V.flatten())
+            T[i,j] = order[Termino]
 
     T=T[iniF:F-finF,iniC:C-finC]
     return np.uint8(T)

@@ -16,8 +16,11 @@ imshow(Gris)
 %imshow(Ir)
 
 L=21; K=ones(L)/L^2;
+V=[5,5]
+n=V(1);
+m=V(2);
 
-[n m]=size(K);
+
 iniF=(n+1)/2;
 iniC=(m+1)/2;
 finF=iniF-1;
@@ -28,7 +31,8 @@ T=zeros(F,C);
 for i=iniF:F-finF
     for j=iniC:C-finC
         V=Ipad(i-finF:i+finF,j-finC:j+finC);
-        T(i,j)=sum(double(V(:)).*K(:));
+        Orden=sort(V(:));
+        T(i,j)=Orden((n*m+1)/2);
     end
 end
 T=uint8(T);
