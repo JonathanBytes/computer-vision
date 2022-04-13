@@ -5,13 +5,19 @@ import numpy as np
 RGB = plt.imread('cartagena.jpg')
 r,g,b = imsplit(RGB)
 
-paso = 4
+""" paso = 4 """
 filas, cols = r.shape
 plt.figure()
 plt.imshow(r)
-r = r[1:paso:filas,1:paso:cols]
+""" print('filas %f cols %f'%(filas,cols))
+for i in range(filas-1):
+    for j in range(cols-1):
+        r = r[i,j]
+ """
+""" r = r[1:paso:filas-1,1:paso:cols-1] """
+""" print(r.shape)
 plt.figure()
-plt.imshow(r)
+plt.imshow(r) """
 
 Tam=21
 K = np.ones([Tam,Tam])*(1/Tam**2)
@@ -35,8 +41,8 @@ FinC = iniC - 1
 
 for i in range(iniF,filas-FinF):
     for j in range(iniC,cols-FinC):
-        W = padr[i-FinF:i+FinF,j-FinC:j+FinC]*K
-        T[i,j]=np.sum(W)
+        W = padr[i-FinF:i+FinF,j-FinC:j+FinC]
+        T[i,j]=np.sum(W*K)
 
 T=T[iniF:filas-FinF,iniC:cols-FinC]
 T = np.uint8(T)
@@ -45,4 +51,3 @@ plt.set_cmap('gray')
 plt.imshow(T)
 
 plt.show()
-

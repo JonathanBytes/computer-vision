@@ -67,7 +67,7 @@ def histeq(I): # Try of a translation of a Matlab code.
     S=np.uint8(he[I])
     return S
 
-def rbg2gray(I):
+def rgb2gray(I):
     r,g,b=imsplit(I)
     return np.uint8(0.299*np.double(r)+0.587*np.double(g)+0.114*np.double(b))
 

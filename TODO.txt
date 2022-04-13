@@ -7,3 +7,5 @@ Función de Sauvola
 Función de la media, mediana, moda y maximos y mínimos
 Función de binarización
 Segmentación con HSV
+
+rangefilt std y entropy funciones de filtrado
