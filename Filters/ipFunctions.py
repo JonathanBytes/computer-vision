@@ -151,3 +151,30 @@ def psnr(I,Ir):
     meanNoise = np.mean(np.double(Ir)**2)
     SNR = 10*np.log10(meanNoise/MSE)
     return PSNR, SNR
+
+def undersize(I,step):
+    F,C = I.shape
+    return I[0:F:step,0:C:step]
+
+def imfilter(I,K):
+    n, m = K.shape
+    n = int(n)
+    m = int(m)
+    
+    iniF=(n+1)//2
+    iniC=(m+1)//2
+    finF=iniF - 1
+    finC=iniC - 1
+    
+    Ipad=np.pad(I,(finF,finC),'edge')
+    
+    F,C = Ipad.shape
+    T=np.zeros([F,C])
+    
+    for i in range(iniF,F-finF):
+        for j in range(iniC,C-finC):
+            V = Ipad[i-finF-1:i+finF,j-finC-1:j+finC]
+            T[i,j] = np.sum(V*K)
+
+    T=T[iniF:F-finF,iniC:C-finC]
+    return np.uint8(T)

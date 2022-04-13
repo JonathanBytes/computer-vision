@@ -6,15 +6,14 @@ RGB = plt.imread('cartagena.jpg')
 Gris = rgb2gray(RGB)
 
 F,C = Gris.shape
-Gris = undersize(Gris,4)
-
-Tam=21
-K = np.ones([Tam,Tam])*(1/Tam**2)
-
-T = imfilter(Gris,K)
+paso = 4
+gray = Gris[0:F:paso,0:C:paso]
 
 plt.figure()
 plt.set_cmap('gray')
-plt.imshow(T)
+plt.subplot(1,2,1)
+plt.imshow(Gris)
+plt.subplot(1,2,2)
+plt.imshow(gray)
 
 plt.show()

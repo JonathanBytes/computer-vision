@@ -2,12 +2,12 @@ clc
 clear all; close all
 RGB=imread('cartagena.jpg');
 
-gris=rgb2gray(RGB);
+Gris=rgb2gray(RGB);
 paso=4;
-gris=gris(1:paso:end,1:paso:end);
+Gris=Gris(1:paso:end,1:paso:end);
 
-%figure()
-%imshow(gris)
+figure()
+imshow(Gris)
 
 %Ir=imnoise(gris,'salt & pepper',0.2);
 %Ir=imnoise(gris,'gaussian',0.2);
@@ -17,7 +17,26 @@ gris=gris(1:paso:end,1:paso:end);
 
 L=21; K=ones(L)/L^2;
 
-If=my_imfilter(gris,K);
+[n m]=size(K);
+iniF=(n+1)/2;
+iniC=(m+1)/2;
+finF=iniF-1;
+finC=iniC-1;
+Ipad=padarray(Gris,[finF finC],'replicate');
+[F C]=size(Ipad);
+T=zeros(F,C);
+for i=iniF:F-finF
+    for j=iniC:C-finC
+        V=Ipad(i-finF:i+finF,j-finC:j+finC);
+        T(i,j)=sum(double(V(:)).*K(:));
+    end
+end
+T=uint8(T);
+T=T(iniF:F-finF,iniC:C-finC);
+
+
+If = T;
+%If=my_imfilter(Gris,K);
 
 figure()
 imshow(If)
