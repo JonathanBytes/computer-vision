@@ -6,6 +6,7 @@ def my_rgb2hsv(I = None):
     b = double(I(:,:,3)) / 255
     N,M,L = I.shape
     Cmax = np.zeros((N,M))
+    Cmin = np.zeros((N,M))
     d = np.zeros((N,M))
     H = np.zeros((N,M))
     S = np.zeros((N,M))
