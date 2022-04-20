@@ -10,14 +10,17 @@ def imsplit(rgb):
     return r,g,b
 
 def imhist(r,show=True):
-    print('\nComenzando histograma ⌛\n')
+    if show==True:
+        print('\nComenzando histograma ⌛\n')
+
     h = np.zeros(256)    
     filas,cols = r.shape
-    for i in range(1,filas):
-        for j in range(1,cols):
+    for i in range(0,filas):
+        for j in range(0,cols):
             h[r[i,j]] = h[r[i,j]]+1
-    print('\nHistograma completado ✅')
+
     if show==True:
+        print('\nHistograma completado ✅')
         print('\nGraficando histograma...')
         n = np.linspace(0,255,256)
         plt.bar(n,h)
@@ -180,9 +183,24 @@ def imfilter(I,K):
     T=T[iniF:F-finF,iniC:C-finC]
     return np.uint8(T)
 
-def fspecial(type,size):
+def fspecial(type,size=3,S=0.5): #Creador del Kernel
     if type.lower() == 'average':
-        return np.ones(size)/size^2
+        return np.ones([size,size])/size**2
+
+    if type.lower() == 'gaussian':
+        shape = (size-1)//2
+
+        a = np.arange(-shape,shape+1)
+        b = np.arange(-shape,shape+1)
+
+        X,Y = np.meshgrid(a,b)
+        S=0.5
+        G=(1/(2*np.pi*S**2))*np.exp(-(X**2+Y**2)/(2*S**2))
+        normalG = G / np.sum(G)
+        print(normalG.shape)
+        print(np.sum(normalG))
+        return normalG
+
 
 def medfilt2(I,V):
     
@@ -252,3 +270,56 @@ def ordfilt2(I,Termino,K):
 
     T=T[iniF:F-finF,iniC:C-finC]
     return np.uint8(T)
+
+def stdfilt(I,K):
+    n, m = K.shape
+    n = int(n)
+    m = int(m)
+    
+    iniF=(n+1)//2
+    iniC=(m+1)//2
+    finF=iniF - 1
+    finC=iniC - 1
+    
+    Ipad=np.pad(I,(finF,finC),'edge')
+    
+    F,C = Ipad.shape
+    T=np.zeros([F,C])
+    
+    for i in range(iniF,F-finF):
+        for j in range(iniC,C-finC):
+            V = Ipad[i-finF-1:i+finF,j-finC-1:j+finC]
+            T[i,j] = np.std(V*K)
+
+    T=T[iniF:F-finF,iniC:C-finC]
+    return T
+
+def entropyfilt(I,K): # Para revisar
+    n, m = K.shape
+    n = int(n)
+    m = int(m)
+    
+    iniF=(n+1)//2
+    iniC=(m+1)//2
+    finF=iniF - 1
+    finC=iniC - 1
+    
+    Ipad=np.pad(I,(finF,finC),'edge')
+    
+    F,C = Ipad.shape
+    T=np.zeros([F,C])
+    
+    for i in range(iniF,F-finF):
+        for j in range(iniC,C-finC):
+            V = Ipad[i-finF-1:i+finF,j-finC-1:j+finC]
+            S = np.uint8(V*K)
+            hist = imhist(S,False)
+            normalHist = hist/np.sum(S)
+            # T[i,j] = -np.sum(p*np.log2(p))
+            T[i,j] = -np.dot(normalHist,np.log2(normalHist))
+
+    T=T[iniF:F-finF,iniC:C-finC]
+    return T
+
+def gaussfilt(cosas):
+    print(cosas)

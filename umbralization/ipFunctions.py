@@ -2,8 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
 
-def imsplit(img):
-    rgb = plt.imread(img)
+def imsplit(rgb):
     r=rgb[:,:,0]
     g=rgb[:,:,1]
     b=rgb[:,:,2]
