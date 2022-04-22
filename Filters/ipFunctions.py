@@ -144,6 +144,11 @@ def non_overflowing_sum(I,noise):
     c[np.where(c>255)] = 255
     return np.uint8(c)
 
+def bits8(I):
+    I[np.where(I>255)] = 255
+    I[np.where(I<0)] = 0
+    return np.uint8(I)
+
 def immse(I,Ir):
     filas, cols = I.shape
     SE=(np.double(I)-np.double(Ir))**2
@@ -164,24 +169,49 @@ def imfilter(I,K):
     n, m = K.shape
     n = int(n)
     m = int(m)
-    
+   
     iniF=(n+1)//2
     iniC=(m+1)//2
     finF=iniF - 1
     finC=iniC - 1
-    
-    Ipad=np.pad(I,(finF,finC),'edge')
-    
+   
+    I = np.double(I)
+    Ipad=np.pad(I,(n,m),'edge')
+   
     F, C = Ipad.shape
     T=np.zeros([F,C])
-    
+   
     for i in range(iniF,F-finF):
         for j in range(iniC,C-finC):
             V = Ipad[i-finF-1:i+finF,j-finC-1:j+finC]
             T[i,j] = np.sum(V*K)
 
     T=T[iniF:F-finF,iniC:C-finC]
-    return np.uint8(T)
+    return bits8(T)
+
+# def padarray(g,n,m):
+#   fil,col=np.shape(g)
+#   limi=int((n-1)/2)
+#   limj=int((m-1)/2)
+#   S=np.zeros((fil+2*limi,col+2*limj))
+#   S[limi:fil+limi,limj:col+limj]=g
+#   return S
+
+# def imfilter(Gris,K):
+#   I=np.copy(Gris)
+#   n,m=np.shape(K)
+#   S=np.zeros(np.shape(I))
+#   # g=np.pad(I,(n,m),'edge')
+#   g=padarray(I,n,m)
+#   limi=int((n-1)/2)
+#   limj=int((m-1)/2)
+#   fils,cols=np.shape(g)
+#   for i in range(limi,fils-limi):
+#     for j in range(limj,cols-limj):
+#       p=g[i-limi:i+limi+1,j-limj:j+limj+1]*K
+#       S[i-limi,j-limj]=np.sum(p)
+#   S=bits8(S)
+#   return S
 
 def fspecial(type,size=3,S=0.5,alpha=0.2): #Creador del Kernel
     if type.lower() == 'average':
