@@ -172,7 +172,7 @@ def imfilter(I,K):
     
     Ipad=np.pad(I,(finF,finC),'edge')
     
-    F,C = Ipad.shape
+    F, C = Ipad.shape
     T=np.zeros([F,C])
     
     for i in range(iniF,F-finF):
@@ -183,7 +183,7 @@ def imfilter(I,K):
     T=T[iniF:F-finF,iniC:C-finC]
     return np.uint8(T)
 
-def fspecial(type,size=3,S=0.5): #Creador del Kernel
+def fspecial(type,size=3,S=0.5,alpha=0.2): #Creador del Kernel
     if type.lower() == 'average':
         return np.ones([size,size])/size**2
 
@@ -201,6 +201,10 @@ def fspecial(type,size=3,S=0.5): #Creador del Kernel
         print(np.sum(normalG))
         return normalG
 
+    if type.lower() == 'laplacian':
+        
+        K = 4 / (alpha + 1) * np.array([[alpha/4,(1-alpha)/4,alpha/4],[(1-alpha)/4,-1,(1-alpha)/4],[alpha/4,(1-alpha)/4,alpha/4]])
+        return K
 
 def medfilt2(I,V):
     

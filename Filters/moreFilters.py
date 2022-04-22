@@ -1,4 +1,3 @@
-
 import matplotlib.pyplot as plt
 from ipFunctions import *
 import numpy as np

@@ -8,6 +8,7 @@ r,g,b = imsplit(RGB)
 r = imundersize(r,4)
 
 L = 5
+
 # size = (L-1)//2
 
 # a = np.arange(-size,size+1)
@@ -18,6 +19,7 @@ L = 5
 # G=(1/(2*np.pi*S**2))*np.exp(-(X**2+Y**2)/(2*S**2))
 # normalG = G / np.sum(G)
 
+# No funciona con gaussian, revisar jaja salu2
 K = fspecial('gaussian',21,3.5)
 I = imfilter(r,K)
 
