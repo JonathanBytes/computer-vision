@@ -189,35 +189,11 @@ def imfilter(I,K):
     T=T[iniF:F-finF,iniC:C-finC]
     return bits8(T)
 
-# def padarray(g,n,m):
-#   fil,col=np.shape(g)
-#   limi=int((n-1)/2)
-#   limj=int((m-1)/2)
-#   S=np.zeros((fil+2*limi,col+2*limj))
-#   S[limi:fil+limi,limj:col+limj]=g
-#   return S
-
-# def imfilter(Gris,K):
-#   I=np.copy(Gris)
-#   n,m=np.shape(K)
-#   S=np.zeros(np.shape(I))
-#   # g=np.pad(I,(n,m),'edge')
-#   g=padarray(I,n,m)
-#   limi=int((n-1)/2)
-#   limj=int((m-1)/2)
-#   fils,cols=np.shape(g)
-#   for i in range(limi,fils-limi):
-#     for j in range(limj,cols-limj):
-#       p=g[i-limi:i+limi+1,j-limj:j+limj+1]*K
-#       S[i-limi,j-limj]=np.sum(p)
-#   S=bits8(S)
-#   return S
-
 def fspecial(type,size=3,S=0.5,alpha=0.2): #Creador del Kernel
     if type.lower() == 'average':
         return np.ones([size,size])/size**2
 
-    if type.lower() == 'gaussian':
+    if type.lower() == 'gaussian': # Para revisar
         shape = (size-1)//2
 
         a = np.arange(-shape,shape+1)

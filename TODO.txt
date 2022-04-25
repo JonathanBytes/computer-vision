@@ -1,11 +1,14 @@
 hay que hacer mucha cosa :D
 
 Funciones de HSV
-Función de otsu, es graythresh
+
+✅ Función de otsuthresh(histograma) y graythresh(imagen)
+⏲ Adaptthresh
+
 Función de Bradley
 Función de Sauvola
 Función de la media, mediana, moda y maximos y mínimos
 Función de binarización
 Segmentación con HSV
 
-rangefilt std y entropy funciones de filtrado
+✅ rangefilt std y entropy funciones de filtrado
