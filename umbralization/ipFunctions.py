@@ -368,4 +368,3 @@ def imbinarize(I,T=False,method='otsu'):
         return im2bw(I,T)
     if method.lower() == 'bradley':
         print('Usado método de bradley')
-
