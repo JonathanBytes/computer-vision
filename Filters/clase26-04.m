@@ -1,0 +1,13 @@
+L=5
+S=0.5
+ini=(L-1)/2
+[X Y]=meshgrid(-ini:ini,-ini:ini)
+# G=-(1/(pi*S^2))*exp(-(X.^2+Y.^2)/(2*S^2))*(1-(X.^2+Y.^2)/(2*S^2))
+# K=G./sum(G(:))
+G=1/(2*pi*S^2)*exp(-(X.^2+Y.^2)/(2*S^2));
+ks=sum(G(:));
+Termin_z=X.^2 + Y.^2 -2*S^2;
+e=exp(-(X.^2+Y.^2)/(2*S^2));
+f=1/(2*pi*S^6*ks);
+Z=f*(Termin_z).*e;
+my_K=Z-sum(Z(:))/L^2

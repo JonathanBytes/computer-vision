@@ -2,6 +2,10 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
 import statistics as stat
+import matplotlib.image as mpimg
+
+def imsave(name,I):
+    mpimg.imsave(name+'.jpeg',I)
 
 def imsplit(rgb):
     r=rgb[:,:,0]
@@ -207,9 +211,35 @@ def fspecial(type,size=3,S=0.5,alpha=0.2): #Creador del Kernel
         print(np.sum(normalG))
         return normalG
 
+    if type.lower() == 'log': # Para revisar
+        shape = (size-1)//2
+
+        a = np.arange(-shape,shape+1)
+        b = np.arange(-shape,shape+1)
+
+        X,Y = np.meshgrid(a,b)
+        G=1/(2*np.pi*S**2)*np.exp(-(X**2+Y**2)/(2*S**2))
+        ks=np.sum(G)
+        Termin_z=X**2 + Y**2 -2*S**2
+        e=np.exp(-(X**2+Y**2)/(2*S**2))
+        f=1/(2*np.pi*S**6*ks)
+        Z=f*(Termin_z)*e
+        my_K=Z-np.sum(Z)/size**2
+        print(my_K.shape)
+        print(np.sum(my_K))
+        return my_K
+
     if type.lower() == 'laplacian':
         
         K = 4 / (alpha + 1) * np.array([[alpha/4,(1-alpha)/4,alpha/4],[(1-alpha)/4,-1,(1-alpha)/4],[alpha/4,(1-alpha)/4,alpha/4]])
+        return K
+
+    if type.lower() == 'prewitt':
+        K = np.array([[1,1,1],[0,0,0],[-1,-1,-1]])
+        return K
+
+    if type.lower() == 'sobel':
+        K = np.array([[1,2,1],[0,0,0],[-1,-2,-1]])
         return K
 
 def medfilt2(I,V):
@@ -333,3 +363,63 @@ def entropyfilt(I,K): # Para revisar
 
 def gaussfilt(cosas):
     print(cosas)
+
+def im2bw(I,T):
+    if T < 1: T = T * 255
+    return I>=T
+
+def otsuthresh(h):
+    lh = len(h)
+    tam = np.sum(h)
+    maxV = 0
+    for T in range(lh):
+        Acub = np.sum(h[0:T])
+        Wb = Acub/tam
+        Acuf = np.sum(h[T+1:lh])
+        if Acub==0:
+            Ub=0
+        else:
+            Ub=(np.arange(0,T,1) @ h[0:T])/Acub
+        if Acuf==0:
+            Uf = 0
+        else:
+            Uf=(np.arange(T+1,lh,1) @ h[T+1:lh])/Acuf
+        Wf = 1-Wb
+        BCV = Wb*Wf*(Ub-Uf)**2
+        if BCV>=maxV:
+            maxV=BCV
+            umbral=(T+1)/255
+    return umbral
+    
+
+def imbinarize(I,T=False,method='otsu'):
+    if (T == False) or (method == 'otsu'):
+        T = graythresh(I)
+        return im2bw(I,T)
+    if method.lower() == 'bradley':
+        print('Usado método de bradley')
+
+def adaptthresh(r,V=[3,3],Pb=10,Ks=0.2,Rs=128,method='bradley'):
+    padn=(V[0]-1)//2
+    padm=(V[1]-1)//2
+    padr=np.pad(r,(padn,padm),'edge')
+    F, C = r.shape
+    T=np.zeros([F,C])
+
+    iniF=(V[0]+1)//2
+    iniC=(V[1]+1)//2
+    FinF=iniF-1
+    FinC=iniC-1
+
+    for i in range(iniF,F-FinF):
+        for j in range(iniC,C-FinC):
+            W = padr[i-FinF-1:i+FinF,j-FinC-1:j+FinC]
+            if method.lower() == 'bradley': T[i,j]=np.mean(W)*(1-Pb/100)
+            if method.lower() == 'sauvola': T[i,j]=np.mean(W)*(1+Ks*(np.std(W)/Rs-1))
+            if method.lower() == 'mean': T[i,j]=np.mean(W)
+            if method.lower() == 'median': T[i,j]=np.median(W)
+            if method.lower() == 'mode': T[i,j]=stat.mode(W.flatten())
+            if method.lower() == 'maxmin': T[i,j]=(np.max(W)+np.min(W))/2
+    return T
+
+
