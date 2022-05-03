@@ -211,7 +211,7 @@ def fspecial(type,size=3,S=0.5,alpha=0.2): #Creador del Kernel
         print(np.sum(normalG))
         return normalG
 
-    if type.lower() == 'log': # Para revisar
+    if type.lower() == 'log':
         shape = (size-1)//2
 
         a = np.arange(-shape,shape+1)
@@ -230,7 +230,6 @@ def fspecial(type,size=3,S=0.5,alpha=0.2): #Creador del Kernel
         return my_K
 
     if type.lower() == 'laplacian':
-        
         K = 4 / (alpha + 1) * np.array([[alpha/4,(1-alpha)/4,alpha/4],[(1-alpha)/4,-1,(1-alpha)/4],[alpha/4,(1-alpha)/4,alpha/4]])
         return K
 
@@ -243,7 +242,6 @@ def fspecial(type,size=3,S=0.5,alpha=0.2): #Creador del Kernel
         return K
 
 def medfilt2(I,V):
-    
     n = V[0]
     m = V[1]
     

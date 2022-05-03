@@ -8,7 +8,7 @@ Funciones de HSV
 ✅ Función de Bradley
 ✅ Función de Sauvola
 ✅ Función de la ✅media, ✅mediana, ✅moda y maximos y mínimos
-Función de binarización (tal vez terminad, no sé qué deba contener)
+⏲ Función de binarización (tal vez terminad, no sé qué deba contener)
 Segmentación con HSV
 
 ✅ rangefilt std y entropy funciones de filtrado
