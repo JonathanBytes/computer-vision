@@ -2,7 +2,7 @@ from ipFunctions import *
 import matplotlib.pyplot as plt
 import numpy as np
 
-RGB = plt.imread('linea1.jpg')
+RGB = plt.imread('rectangulo1.jpg')
 ri, g, b = imsplit(RGB)
 step = 1
 ri = imundersize(ri,step)
