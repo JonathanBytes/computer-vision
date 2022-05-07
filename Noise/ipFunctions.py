@@ -130,18 +130,19 @@ def imnoise(I,tipo,P,V):
     if tipo == 'salpimienta':
         print('\nSe usará el método de Sal Pimienta para añadir ruido')
         Puntos = filas*cols*V
-        print(Puntos,'puntos')
         Ir = I
         for i in range(1,int(Puntos)):
             x = np.random.randint(1,filas)
             y = np.random.randint(1,cols)
-            Ir[x,y]=np.uint8(255*np.random.randint(0,1))
+            Ir[x,y]=np.uint8(255*np.random.randint(0,2))
         return Ir
-    if tipo == "spekle":
+
+    if tipo == 'spekle':
+        print('\nSe usará el método de Spekle para añadir ruido')
         M=0
-        S=P
-        noise= np.random.normal(M,S,[filas, cols])
-        return np.uint8(I * (noise+1))
+        S=V
+        noise = np.random.normal(M,S,(filas,cols))
+        return bits8(np.double(I) * (noise+1))
         
 def non_overflowing_sum(I,noise):
     c = np.uint16(I)+noise

@@ -121,31 +121,33 @@ def graythresh(b):
 def imnoise(I,tipo,P,V):
     filas, cols = I.shape
     if tipo == 'gaussian':
-        print('\nSe usará el método de Gauss')
+        print('\nSe usará el método de Gauss para añadir ruido')
         M=P
         S=V*255
         noise = np.random.normal(M,S,(filas,cols))
         return non_overflowing_sum(I,noise) 
 
     if tipo == 'salpimienta':
-        print('\nSe usará el método de Sal Pimienta')
+        print('\nSe usará el método de Sal Pimienta para añadir ruido')
         Puntos = filas*cols*V
-        print(Puntos,'puntos')
         Ir = I
         for i in range(1,int(Puntos)):
             x = np.random.randint(1,filas)
             y = np.random.randint(1,cols)
-            Ir[x,y]=np.uint8(255*np.random.randint(0,1))
+            Ir[x,y]=np.uint8(255*np.random.randint(0,2))
         return Ir
-    if tipo == "spekle":
+
+    if tipo == 'spekle':
+        print('\nSe usará el método de Spekle para añadir ruido')
         M=0
-        S=P
-        noise= np.random.normal(M,S,[filas, cols])
-        return np.uint8(I * (noise+1))
+        S=V
+        noise = np.random.normal(M,S,(filas,cols))
+        return bits8(np.double(I) * (noise+1))
         
 def non_overflowing_sum(I,noise):
     c = np.uint16(I)+noise
     c[np.where(c>255)] = 255
+    c[np.where(I<0)] = 0
     return np.uint8(c)
 
 def bits8(I):
@@ -363,6 +365,8 @@ def gaussfilt(cosas):
     print(cosas)
 
 def im2bw(I,T):
+    if isinstance(T,np.ndarray):
+        return I>=T
     if T < 1: T = T * 255
     return I>=T
 
@@ -389,13 +393,17 @@ def otsuthresh(h):
             umbral=(T+1)/255
     return umbral
     
-
 def imbinarize(I,T=False,method='otsu'):
-    if (T == False) or (method == 'otsu'):
+    if T != False:
+        return im2bw(I,T)
+    if method == 'otsu':
+        print('Usando OTSU')
         T = graythresh(I)
         return im2bw(I,T)
-    if method.lower() == 'bradley':
-        print('Usado método de bradley')
+    if method == 'bradley':
+        print('Usando bradley')
+        T = adaptthresh(I)
+        return im2bw(I,T)
 
 def adaptthresh(r,V=[3,3],Pb=10,Ks=0.2,Rs=128,method='bradley'):
     padn=(V[0]-1)//2

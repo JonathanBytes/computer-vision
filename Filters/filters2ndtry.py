@@ -5,7 +5,7 @@ import numpy as np
 RGB = plt.imread('cartagena.jpg')
 Gris = rgb2gray(RGB)
 
-F,C = Gris.shape
+F, C = Gris.shape
 Gris = imundersize(Gris,4)
 
 Tam=5
@@ -15,11 +15,12 @@ tipoRuido = 'salpimienta'
 GrayNoisy = imnoise(Gris,'salpimienta',0,0.2)
 print('Noisy image complete ✅')
 
-#T = imfilter(GrayNoisy,K)
+# T = imfilter(GrayNoisy,K)
 # T = medfilt2(GrayNoisy,[5,5])
 #T = modefilt(Gris,[5,5])
 #T = ordfilt2(GrayNoisy,1,np.ones([3,3]))
-K = np.ones([5,5])
+
+K = np.ones([9,9])
 T = stdfilt(Gris,K)
 T = T/np.max(T)
 print('Image filtering complete ✅')

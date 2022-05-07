@@ -146,6 +146,7 @@ def imnoise(I,tipo,P,V):
 def non_overflowing_sum(I,noise):
     c = np.uint16(I)+noise
     c[np.where(c>255)] = 255
+    c[np.where(c>255)] = 255
     return np.uint8(c)
 
 def bits8(I):
@@ -363,6 +364,8 @@ def gaussfilt(cosas):
     print(cosas)
 
 def im2bw(I,T):
+    if isinstance(T,np.ndarray):
+        return I>=T
     if T < 1: T = T * 255
     return I>=T
 
@@ -390,11 +393,16 @@ def otsuthresh(h):
     return umbral
     
 def imbinarize(I,T=False,method='otsu'):
-    if (T == False) or (method == 'otsu'):
+    if T != False:
+        return im2bw(I,T)
+    if method == 'otsu':
+        print('Usando OTSU')
         T = graythresh(I)
         return im2bw(I,T)
-    if method.lower() == 'bradley':
-        print('Usado método de bradley')
+    if method == 'bradley':
+        print('Usando bradley')
+        T = adaptthresh(I)
+        return im2bw(I,T)
 
 def adaptthresh(r,V=[3,3],Pb=10,Ks=0.2,Rs=128,method='bradley'):
     padn=(V[0]-1)//2
@@ -418,5 +426,3 @@ def adaptthresh(r,V=[3,3],Pb=10,Ks=0.2,Rs=128,method='bradley'):
             if method.lower() == 'mode': T[i,j]=stat.mode(W.flatten())
             if method.lower() == 'maxmin': T[i,j]=(np.max(W)+np.min(W))/2
     return T
-
-

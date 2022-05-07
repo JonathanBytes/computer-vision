@@ -1,13 +1,12 @@
 from ipFunctions import *
-import numpy as np
 import matplotlib.pyplot as plt
 
-RGB = plt.imread('n09.jpg');
-# RGB = plt.imread('papel.jpg');
+# RGB = plt.imread('n09.jpg');
+RGB = plt.imread('papel.jpg');
 
 r, g, b = imsplit(RGB);
-# r=np.fliplr(np.transpose(r))
-# r = imundersize(r,4)
+r=np.fliplr(np.transpose(r))
+r = imundersize(r,2)
 
 bw2 = imbinarize(r,method='otsu')
 bw = imbinarize(r,method='bradley')
