@@ -389,7 +389,6 @@ def otsuthresh(h):
             umbral=(T+1)/255
     return umbral
     
-
 def imbinarize(I,T=False,method='otsu'):
     if (T == False) or (method == 'otsu'):
         T = graythresh(I)

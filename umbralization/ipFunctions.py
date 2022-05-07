@@ -335,6 +335,8 @@ def gaussfilt(cosas):
     print(cosas)
 
 def im2bw(I,T):
+    if isinstance(T,np.ndarray):
+        return I>=T
     if T < 1: T = T * 255
     return I>=T
 
@@ -363,13 +365,18 @@ def otsuthresh(h):
     
 
 def imbinarize(I,T=False,method='otsu'):
-    if (T == False) or (method == 'otsu'):
+    if T != False:
+        return im2bw(I,T)
+    if method == 'otsu':
+        print('Usando OTSU')
         T = graythresh(I)
         return im2bw(I,T)
-    if method.lower() == 'bradley':
-        print('Usado método de bradley')
+    if method == 'bradley':
+        print('Usando bradley')
+        T = adaptthresh(I)
+        return im2bw(I,T)
 
-def adaptthresh(r,V=[3,3],Pb=10,Ks=0.2,Rs=128,method='bradley'):
+def adaptthresh(r,V=[9,9],Pb=10,Ks=0.2,Rs=128,method='bradley'):
     padn=(V[0]-1)//2
     padm=(V[1]-1)//2
     padr=np.pad(r,(padn,padm),'edge')

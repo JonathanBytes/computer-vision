@@ -20,7 +20,7 @@ L = 5
 # normalG = G / np.sum(G)
 
 # No funciona con gaussian, revisar jaja salu2
-K = fspecial('gaussian',21,3.5)
+K = fspecial('average',21,3.5)
 I = imfilter(r,K)
 
 plt.figure()
