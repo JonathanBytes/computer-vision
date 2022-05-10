@@ -8,32 +8,46 @@ Gris = rgb2gray(RGB)
 F, C = Gris.shape
 Gris = imundersize(Gris,4)
 
-Tam=5
-# K = np.ones([Tam,Tam])*(1/Tam**2)
-K = fspecial('average',Tam)
+Tam=21
+Kaverage = fspecial('average',Tam)
+Kgaussian = fspecial('gaussian',Tam)
+Klog = fspecial('log',Tam)
+Klaplacian = fspecial('laplacian',Tam)
+Kprewitt = fspecial('prewitt',Tam)
+Ksobel = fspecial('sobel',Tam)
 
-# tipoRuido = 'salpimienta'
-# GrayNoisy = imnoise(Gris,'salpimienta',0,0.2)
-# print('Noisy image complete ✅')
-
-# T = imfilter(GrayNoisy,K)
-# T = medfilt2(GrayNoisy,[5,5])
-#T = modefilt(Gris,[5,5])
-#T = ordfilt2(GrayNoisy,1,np.ones([3,3]))
-
-# K = np.ones([9,9])
-T = stdfilt(Gris,K)
-tipoFiltro = 'stdfilt'
-# T = T/np.max(T)
-print('Image filtering complete ✅')
+Iaverage = imfilter(Gris,Kaverage)
+Igaussian = imfilter(Gris,Kgaussian)
+Ilog = imfilter(Gris,Klog)
+Ilaplacian = imfilter(Gris,Klaplacian)
+Iprewitt = imfilter(Gris,Kprewitt)
+Isobel = imfilter(Gris,Ksobel)
 
 plt.figure()
 plt.set_cmap('gray')
-# plt.subplot(1,2,1)
-plt.title('Imagen filtrada con %s'%(tipoFiltro))
-# plt.imshow(GrayNoisy)
-# plt.subplot(1,2,2)
-# plt.title('Imagen filtrada')
-plt.imshow(T)
+
+plt.subplot(2,3,1)
+plt.title('Imagen filtrada con Average')
+plt.imshow(Iaverage)
+
+plt.subplot(2,3,2)
+plt.title('Imagen filtrada con Gaussian')
+plt.imshow(Igaussian)
+
+plt.subplot(2,3,3)
+plt.title('Imagen filtrada con LOG')
+plt.imshow(Ilog)
+
+plt.subplot(2,3,4)
+plt.title('Imagen filtrada con Laplacian')
+plt.imshow(Ilaplacian)
+
+plt.subplot(2,3,5)
+plt.title('Imagen filtrada con Prewitt')
+plt.imshow(Iprewitt)
+
+plt.subplot(2,3,6)
+plt.title('Imagen filtrada con Sobel')
+plt.imshow(Isobel)
 
 plt.show()
