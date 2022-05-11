@@ -208,7 +208,7 @@ def fspecial(type,size=3,S=0.5,alpha=0.2): #Creador del Kernel
         S=0.5
         G=(1/(2*np.pi*S**2))*np.exp(-(X**2+Y**2)/(2*S**2))
         normalG = G / np.sum(G)
-        return G 
+        return normalG 
 
     if type.lower() == 'log':
         shape = (size-1)//2

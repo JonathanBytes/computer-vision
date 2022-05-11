@@ -12,3 +12,7 @@ Funciones de HSV
 Segmentación con HSV
 
 ✅ rangefilt std y entropy funciones de filtrado
+
+Histograma de gradientes orientados -> Tema para proyecto final
+Binariza, detectar bordes y con los bordes dibuja vectores
+hog image processing
