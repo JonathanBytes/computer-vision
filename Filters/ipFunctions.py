@@ -171,17 +171,17 @@ def imundersize(I,step):
     return I[0:F:step,0:C:step]
 
 def imfilter(I,K):
+    I = np.copy(I)
     n, m = K.shape
     n = int(n)
     m = int(m)
    
-    iniF=(n+1)//2
-    iniC=(m+1)//2
+    iniF=int((n+1)//2)
+    iniC=int((m+1)//2)
     finF=iniF - 1
     finC=iniC - 1
    
-    I = np.double(I)
-    Ipad=np.pad(I,(n,m),'edge')
+    Ipad=np.pad(I,(finF,finC),'edge')
    
     F, C = Ipad.shape
     T=np.zeros([F,C])
@@ -189,26 +189,34 @@ def imfilter(I,K):
     for i in range(iniF,F-finF):
         for j in range(iniC,C-finC):
             V = Ipad[i-finF-1:i+finF,j-finC-1:j+finC]
-            T[i,j] = np.sum(V*K)
-
-    T=T[iniF:F-finF,iniC:C-finC]
-    return bits8(T)
+            T[i,j] = np.sum(np.double(V)*np.array(K))
+    T = bits8(T)
+    T = T[iniF:F-finF,iniC:C-finC]
+    return T
 
 def fspecial(type,size=3,S=0.5,alpha=0.2): #Creador del Kernel
     if type.lower() == 'average':
         return np.ones([size,size])/size**2
 
-    if type.lower() == 'gaussian': # Para revisar
-        shape = (size-1)//2
+    # if type.lower() == 'gaussian': # Para revisar
+    #     shape = (size-1)//2
 
-        a = np.arange(-shape,shape+1)
-        b = np.arange(-shape,shape+1)
+    #     a = np.arange(-shape,shape+1)
+    #     b = np.arange(-shape,shape+1)
 
-        X,Y = np.meshgrid(a,b)
-        S=0.5
-        G=(1/(2*np.pi*S**2))*np.exp(-(X**2+Y**2)/(2*S**2))
-        normalG = G / np.sum(G)
-        return normalG 
+    #     X,Y = np.meshgrid(a,b)
+    #     S=0.5
+    #     G=(1/(2*np.pi*S**2))*np.exp(-(X**2+Y**2)/(2*S**2))
+    #     normalG = G / np.sum(G)
+    #     return normalG 
+
+    if type.lower() == 'gaussian':
+        ini=int((size-1)/2)
+        terminos=ini*2+1
+        mes=np.linspace(-ini,ini,terminos)
+        X,Y=np.meshgrid(mes,mes)
+        G=(1/(2*np.pi*S**2))*np.e**(-(X**2+Y**2)/(2*S**2))
+        return G/np.sum(G[:])
 
     if type.lower() == 'log':
         shape = (size-1)//2
