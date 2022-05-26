@@ -3,6 +3,14 @@ import matplotlib as mpl
 import numpy as np
 import statistics as stat
 import matplotlib.image as mpimg
+import tkinter as tk
+from tkinter import filedialog
+from skimage.transform import resize
+
+def getuserpath():
+    root = tk.Tk()
+    root.withdraw()
+    return filedialog.askopenfilename()
 
 def imsave(name,I):
     mpimg.imsave(name+'.jpeg',I)
