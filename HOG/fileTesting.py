@@ -63,7 +63,8 @@ for i in range(128):
         y = mag[i,j] * np.sin(np.radians(theta[i,j]))
         ax.quiver(j, i, x, y, scale=1)
         ax.set_title('Quiver plot with one arrow')
-    if i%5
+    if i%5==0:
+        print('mag = %f , theta = %f, i = %i , j = %i'%(mag[i,j],theta[i,j],i,j))
 
 # plt.figure()
 # plt.subplot(1,2,1)
