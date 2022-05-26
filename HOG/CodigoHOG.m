@@ -119,37 +119,3 @@ end
 H2=(H(:)');
 figure(6);
 bar(H2);
-
-%% Código Test
-
-load trainedModel2.mat;
-testdata=H2;
-prediction=trainedModel.predictFcn(testdata);
-
-if     prediction==1
-    disp('PREDICCIÓN: ------- La foto corresponde a Cristian');
-elseif prediction==2
-    disp('PREDICCIÓN: ------- La foto corresponde a Juan Diego');
-elseif prediction==3
-    disp('PREDICCIÓN: ------- La foto corresponde a Juliana');
-elseif prediction==4
-    disp('PREDICCIÓN: ------- La foto corresponde a Leonardo');
-elseif prediction==5
-    disp('PREDICCIÓN: ------- La foto corresponde a Valentina');
-end
-%%
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

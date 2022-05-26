@@ -4,7 +4,7 @@ from ipFunctions import *
 
 file_path = getuserpath()
 
-print(file_path)
+print('Se usará la imagen:',file_path)
 
 RGB = plt.imread(file_path)
 gray = rgb2gray(RGB)
