@@ -55,6 +55,16 @@ theta = np.array(theta)
 
 print('mag %s , theta %s'%(mag.shape,theta.shape))
 
+fig, ax = plt.subplots(figsize = (12, 7))
+for i in range(128):
+    for j in range(64):
+        # print('mag = %f , theta = %f, i = %i , j = %i'%(mag[i,j],theta[i,j],i,j))
+        x = mag[i,j] * np.cos(np.radians(theta[i,j]))
+        y = mag[i,j] * np.sin(np.radians(theta[i,j]))
+        ax.quiver(j, i, x, y, scale=1)
+        ax.set_title('Quiver plot with one arrow')
+    if i%5
+
 # plt.figure()
 # plt.subplot(1,2,1)
 # plt.imshow(RGB)
@@ -62,4 +72,4 @@ print('mag %s , theta %s'%(mag.shape,theta.shape))
 # plt.imshow(gray)
 
 # plt.set_cmap('gray')
-# plt.show()
+plt.show()
