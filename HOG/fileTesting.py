@@ -53,6 +53,8 @@ for i in range(128):
 mag = np.array(mag)
 theta = np.array(theta)
 
+print('mag %s , theta %s'%(mag.shape,theta.shape))
+
 # plt.figure()
 # plt.subplot(1,2,1)
 # plt.imshow(RGB)
