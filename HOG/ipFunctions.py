@@ -176,7 +176,7 @@ def psnr(I,Ir):
     return PSNR, SNR
 
 def imundersize(I,step):
-    F,C = I.shape
+    F,C,capas = I.shape
     return I[0:F:step,0:C:step]
 
 def imfilter(I,K):
