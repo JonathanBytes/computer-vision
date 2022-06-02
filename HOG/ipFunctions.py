@@ -7,6 +7,32 @@ import tkinter as tk
 from tkinter import filedialog
 from skimage.transform import resize
 
+def calcularGradientes(img):
+
+    gx = np.zeros_like(img)
+    gy = np.zeros_like(img)
+
+    # Diferencia central 
+    gx[:, 1:-1] = (img[:, 2:] - img[:, :-2]) / 2
+    gy[1:-1, :] = (img[2:, :] - img[:-2, :]) / 2
+
+    # Diferencia hacia delante
+    gx[:, 0] = img[:, 1] - img[:, 0]
+    gy[0, :] = img[1, :] - img[0, :]
+
+    # Diferencia hacia atrás
+    gx[:, -1] = img[:, -1] - img[:, -2]
+    gy[-1, :] = img[-1, :] - img[-2, :]
+
+    return gx, gy
+
+def getuserimg(cartagena=False):
+    if cartagena == True:
+        return plt.imread('cartagena.jpg')
+    else:
+        path = getuserpath()
+        return plt.imread(path)
+
 def getuserpath():
     root = tk.Tk()
     root.withdraw()

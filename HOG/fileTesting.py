@@ -12,7 +12,7 @@ print('Se usará la imagen:',file_path)
 # img = resize(gray, (128, 64))
 
 RGB = plt.imread(file_path)
-RGB = imundersize(RGB,1)
+RGB = imundersize(RGB,4)
 img = gray = rgb2gray(RGB)
 
 F,C,capas= RGB.shape

@@ -3,53 +3,21 @@ import numpy as np
 from ipFunctions import *
 from histogramaHOG import *
 
-# file_path = getuserpath()
-# file_path = '/home/jonathan/Documents/Universidad/2022-1/computer-vision/HOG/abu.jpeg'
-
-# print('Se usará la imagen:',file_path)
-
-# RGB = plt.imread(file_path)
-# gray = rgb2gray(RGB)
-# RGB = resize(RGB, (F, C))
-# img = resize(gray, (F, C))
-
-from skimage import data, color
-
-original_image = data.astronaut()
-img = rgb2gray(original_image)
-F,C,capas= original_image.shape
+img = getuserimg(cartagena=True)
+img = imundersize(img,6)
+img = rgb2gray(img)
+F, C = img.shape
 img = resize(img, (F, C))
 
-def compute_gradient(image: np.ndarray):
-    """
-    Compute gradient of an image by rows and columns
-    """
-    gx = np.zeros_like(image)
-    gy = np.zeros_like(image)
-    # Central difference
-    gx[:, 1:-1] = (image[:, 2:] - image[:, :-2]) / 2
-    gy[1:-1, :] = (image[2:, :] - image[:-2, :]) / 2
-
-    # Forward difference
-    gx[:, 0] = image[:, 1] - image[:, 0]
-    gy[0, :] = image[1, :] - image[0, :]
-
-    # Backward difference
-    gx[:, -1] = image[:, -1] - image[:, -2]
-    gy[-1, :] = image[-1, :] - image[-2, :]
-
-    return gx, gy
-
-gx, gy = compute_gradient(img)
+gx, gy = calcularGradientes(img)
 
 gy_check, gx_check = np.gradient(img) # Note that the result of np.gradient is in the reversed order
 
 print('diff_gx:', np.linalg.norm(gx - gx_check))
 print('diff_gy', np.linalg.norm(gy - gy_check))
 
-
 mag = np.sqrt(gx**2 + gy**2)
-print('mag min %f'%(np.min(mag)))
+print('mag max %f'%(np.max(mag)))
 mag = mag / np.max(mag)
 theta = np.rad2deg(np.arctan2(gy, gx)) % 180
 print('min theta = %f'%(np.min(theta)))
@@ -75,14 +43,13 @@ def normalize_vector(v, eps=1e-5):
     # eps is used to prevent zero divide exceptions (in case v is zero)
     return v / np.sqrt(np.sum(v ** 2) + eps ** 2) 
 
-
 def compute_hog_features(image: np.ndarray,
                          n_orientations: int = 9, pixels_per_cell: (int, int) = (8, 8),
                          cells_per_block: (int, int) = (1, 1)) -> np.ndarray:
     """
     Compute HOG features of an image. Return a row vector
     """
-    gx, gy = compute_gradient(image)
+    gx, gy = calcularGradientes(image)
     sy, sx = gx.shape
     cx, cy = pixels_per_cell
     bx, by = cells_per_block
@@ -127,7 +94,6 @@ hog_features = compute_hog_features(
     cells_per_block=(1, 1))
 
 from skimage.feature import hog
-
 hog_features_check = hog(
     img, orientations=9,
     pixels_per_cell=(8, 8), cells_per_block=(1, 1),
@@ -136,41 +102,3 @@ hog_features_check = hog(
 assert hog_features.shape == hog_features_check.shape
 print(np.allclose(hog_features, hog_features_check))
 print(hog_features.shape)
-
-import numpy as np
-import matplotlib.pyplot as plt
-from skimage.feature import hog
-
-_, hog_image = hog(
-    img, orientations=9, pixels_per_cell=(8, 8),
-    cells_per_block=(1, 1), block_norm='L2',
-    visualize=True)
-
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
-
-ax1.axis('off'); ax2.axis('off')
-ax1.imshow(img, cmap=plt.get_cmap('gray'))
-ax1.set_title('Input image')
-
-ax2.imshow(hog_image, cmap=plt.get_cmap('gray'))
-ax2.set_title('HOG')
-plt.show()
-
-# fig, ax = plt.subplots()
-# stepF = F // 50
-# stepC = C // 50
-# for i in range(0,F,stepF):
-#     for j in range(0,C,stepC):
-#         x = np.cos(np.radians(theta[i,j]))
-#         y = np.sin(np.radians(theta[i,j]))
-#         ax.arrow(j, abs(i-F), x, y, color=(mag[i,j],mag[i,j],mag[i,j]),width=stepF/16,head_width=stepF/8)
-#         # ax.quiver(j, abs(i-F), x, y, scale=None, color=(mag[i,j],mag[i,j],mag[i,j]),headaxislength=2,headlength=2)
-#         ax.set_title('Quiver plot with one arrow')
-#     if i%5==0:
-#         print('mag = %f , theta = %f, i = %i , j = %i'%(mag[i,j],theta[i,j],i,j))
-
-# ax.set_facecolor('black')
-# ax.axis([0, C, 0, F])
-# ax.set_aspect('equal')
-
-# plt.show()
