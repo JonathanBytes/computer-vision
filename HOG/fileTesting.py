@@ -72,7 +72,7 @@ for i in range(0,F,step):
         y = np.sin(np.radians(theta[i,j]))
         ax.quiver(j, abs(i-F), x, y, scale=40, color=(mag[i,j],mag[i,j],mag[i,j]),headaxislength=3,headlength=3)
         # ax.arrow(j, abs(i-F), x, y, color=(mag[i,j],mag[i,j],mag[i,j]),width=step/8,head_width=step/4)
-        ax.set_title('Quiver plot with one arrow')
+        ax.set_title('HOG features')
     if i%10==0:
         print('mag = %f , theta = %f, i = %i , j = %i'%(mag[i,j],theta[i,j],i,j))
 

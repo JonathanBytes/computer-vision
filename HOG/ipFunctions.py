@@ -7,10 +7,32 @@ import tkinter as tk
 from tkinter import filedialog
 from skimage.transform import resize
 
+def plotHOG(theta,mag):
+    F,C = theta.shape
+    fig, ax = plt.subplots(figsize = (12, 7))
+    step = 14
+    for i in range(0,F,step):
+        for j in range(0,C,step):
+            scale = 4
+            x = scale*np.cos(np.radians(theta[i,j]))
+            y = scale*np.sin(np.radians(theta[i,j]))
+            # ax.quiver(j, abs(i-F), x, y, scale=40, color=(mag[i,j],mag[i,j],mag[i,j]),headaxislength=3,headlength=3)
+            ax.arrow(j, abs(i-F), x, y, color=(mag[i,j],mag[i,j],mag[i,j]),width=step/16,head_width=step/4,head_length=step/8)
+            ax.set_title('HOG features')
+        if i%10==0:
+            print('mag = %f , theta = %f, i = %i , j = %i'%(mag[i,j],theta[i,j],i,j))
+
+    ax.set_facecolor('black')
+    ax.axis([0, C, 0, F])
+    ax.set_aspect('equal')
+
+
+
 def calcularGradientes(img):
 
-    gx = np.zeros_like(img)
-    gy = np.zeros_like(img)
+    F,C = img.shape
+    gx = np.zeros((F,C))
+    gy = np.zeros((F,C))
 
     # Diferencia central 
     gx[:, 1:-1] = (img[:, 2:] - img[:, :-2]) / 2
