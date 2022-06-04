@@ -6,7 +6,16 @@ import matplotlib.image as mpimg
 import tkinter as tk
 from tkinter import filedialog
 from skimage.transform import resize
-import os
+from os import system, name
+
+def clear():
+   # for windows
+   if name == 'nt':
+      _ = system('cls')
+
+   # for mac and linux
+   else:
+       _ = system('clear')
 
 def plotHOG(theta,mag,scale=4,step=8,detalles=False):
     """
@@ -32,11 +41,11 @@ def plotHOG(theta,mag,scale=4,step=8,detalles=False):
         # Reporte de estado de la gráfica
         if i%10==0:
             if detalles: print('mag = %f , theta = %f, i = %i , j = %i'%(mag[i,j],theta[i,j],i,j))
-            os.system("clear")
+            clear()
             porcentaje = i/F * 100 
             print('Graficando vectores: %i %% del procesamiento'%porcentaje)
 
-    os.system("clear")
+    clear()
     print('Terminado')
 
     # Fondo negro, título, acotar los ejes coordenas y mantenerlos en la misma escala
