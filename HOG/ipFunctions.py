@@ -6,27 +6,44 @@ import matplotlib.image as mpimg
 import tkinter as tk
 from tkinter import filedialog
 from skimage.transform import resize
+import os
 
-def plotHOG(theta,mag):
+def plotHOG(theta,mag,scale=4,step=8,detalles=False):
+    """
+    Esta función recibe como entrada dos matrices (theta y mag). 
+    theta : matriz que da el ángulo de cada uno de los grandientes de la imagen
+    mag : matriz que da la magnitud de cada uno de los grandientes de la imagen
+
+    Además recibe dos parámetros extra, scale y step, que son opcionales.
+    scale : Que tan largas serán las flechas vectoriales que se graficarán
+    step : Cantidad de flechas graficadas, más flechas a medida que este parámetro baja
+    """
+
     F,C = theta.shape
     fig, ax = plt.subplots(figsize = (12, 7))
-    step = 14
     for i in range(0,F,step):
         for j in range(0,C,step):
             scale = 4
+            # Se consiguen las coordenas cartecianas a partir de la magnitud y el ángulo, pero su magnitud mantiene siendo 1
             x = scale*np.cos(np.radians(theta[i,j]))
             y = scale*np.sin(np.radians(theta[i,j]))
-            # ax.quiver(j, abs(i-F), x, y, scale=40, color=(mag[i,j],mag[i,j],mag[i,j]),headaxislength=3,headlength=3)
+            # Gráfico de una flecha cuyo color depende de la magnitud, si la magnitud es máxima el color es blanco, por el contrario, si es mínima, el color será negro
             ax.arrow(j, abs(i-F), x, y, color=(mag[i,j],mag[i,j],mag[i,j]),width=step/16,head_width=step/4,head_length=step/8)
-            ax.set_title('HOG features')
+        # Reporte de estado de la gráfica
         if i%10==0:
-            print('mag = %f , theta = %f, i = %i , j = %i'%(mag[i,j],theta[i,j],i,j))
+            if detalles: print('mag = %f , theta = %f, i = %i , j = %i'%(mag[i,j],theta[i,j],i,j))
+            os.system("clear")
+            porcentaje = i/F * 100 
+            print('Graficando vectores: %i %% del procesamiento'%porcentaje)
 
+    os.system("clear")
+    print('Terminado')
+
+    # Fondo negro, título, acotar los ejes coordenas y mantenerlos en la misma escala
+    ax.set_title('HOG features')
     ax.set_facecolor('black')
     ax.axis([0, C, 0, F])
     ax.set_aspect('equal')
-
-
 
 def calcularGradientes(img):
 
@@ -35,6 +52,8 @@ def calcularGradientes(img):
     gy = np.zeros((F,C))
 
     # Diferencia central 
+
+    # Se usa la diferencia central para casi toda la imágen, 
     gx[:, 1:-1] = (img[:, 2:] - img[:, :-2]) / 2
     gy[1:-1, :] = (img[2:, :] - img[:-2, :]) / 2
 
